@@ -2,12 +2,35 @@
   <defs>
     <linearGradient id="ghostGradient" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" style="stop-color:#ff0000;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#cc0000;stop-opacity:1" />
       <stop offset="100%" style="stop-color:#660000;stop-opacity:1" />
     </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
   </defs>
-  <path d="M16 2C8.268 2 2 8.268 2 16c0 7.732 6.268 14 14 14s14-6.268 14-14C30 8.268 23.732 2 16 2z" fill="url(#ghostGradient)"/>
+  
+  <!-- Ghost body -->
+  <path d="M16 2C8.268 2 2 8.268 2 16c0 7.732 6.268 14 14 14s14-6.268 14-14C30 8.268 23.732 2 16 2z" 
+        fill="url(#ghostGradient)" filter="url(#glow)"/>
+  
+  <!-- Ghost eyes -->
   <circle cx="12" cy="12" r="2" fill="white"/>
   <circle cx="20" cy="12" r="2" fill="white"/>
+  <circle cx="12" cy="12" r="1" fill="black"/>
+  <circle cx="20" cy="12" r="1" fill="black"/>
+  
+  <!-- Ghost mouth -->
   <path d="M12 18c0 2.21 1.79 4 4 4s4-1.79 4-4" stroke="white" stroke-width="2" fill="none"/>
-  <path d="M8 8l2-2M24 8l-2-2" stroke="white" stroke-width="1.5" fill="none"/>
+  
+  <!-- Ghost arms -->
+  <path d="M8 8l2-2" stroke="white" stroke-width="1.5" fill="none"/>
+  <path d="M24 8l-2-2" stroke="white" stroke-width="1.5" fill="none"/>
+  
+  <!-- Ghost tail -->
+  <path d="M16 28c-2 0-4-1-4-3s2-3 4-3 4 1 4 3-2 3-4 3z" fill="url(#ghostGradient)"/>
 </svg> 
