@@ -16,14 +16,6 @@
         <header class="header">
             <h1><i class="fas fa-ghost"></i> GHOST</h1>
             <div class="header-controls">
-                <div class="view-toggle">
-                    <button id="cardView" class="view-btn active">
-                        <i class="fas fa-th"></i> <span class="btn-text">การ์ด</span>
-                    </button>
-                    <button id="listView" class="view-btn">
-                        <i class="fas fa-list"></i> <span class="btn-text">รายการ</span>
-                    </button>
-                </div>
                 <a href="admin.html" class="view-link" style="display: none;">
                     <i class="fas fa-cog"></i> <span class="btn-text">จัดการ</span>
                 </a>
@@ -41,6 +33,14 @@
                         <input type="text" id="searchInput" placeholder="ค้นหาวิดีโอผี..." class="search-input">
                         <button id="clearSearch" class="clear-search" style="display: none;">
                             <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="view-toggle">
+                        <button id="cardView" class="view-btn active">
+                            <i class="fas fa-th"></i> <span class="btn-text">การ์ด</span>
+                        </button>
+                        <button id="listView" class="view-btn">
+                            <i class="fas fa-list"></i> <span class="btn-text">รายการ</span>
                         </button>
                     </div>
                     <button id="filterToggleBtn" class="filter-toggle-btn">
@@ -105,17 +105,22 @@
 
         // Mobile menu functionality
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const viewToggle = document.querySelector('.view-toggle');
         const headerControls = document.querySelector('.header-controls');
 
         mobileMenuBtn.addEventListener('click', function() {
-            viewToggle.classList.toggle('active');
+            const viewLink = document.querySelector('.view-link');
+            if (viewLink) {
+                viewLink.style.display = viewLink.style.display === 'none' ? 'flex' : 'none';
+            }
         });
 
         // Close mobile menu when clicking outside
         document.addEventListener('click', function(e) {
             if (!headerControls.contains(e.target)) {
-                viewToggle.classList.remove('active');
+                const viewLink = document.querySelector('.view-link');
+                if (viewLink) {
+                    viewLink.style.display = 'none';
+                }
             }
         });
 
