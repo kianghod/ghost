@@ -30,8 +30,21 @@ class YouTubeLinkViewer {
         this.cardViewBtn.addEventListener('click', () => this.switchView('card'));
         this.listViewBtn.addEventListener('click', () => this.switchView('list'));
 
-        // Search and filter events
-        this.searchInput.addEventListener('input', () => this.filterLinks());
+        // Search and filter events with debounce
+        let searchTimeout;
+        this.searchInput.addEventListener('input', (e) => {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                this.filterLinks();
+            }, 300);
+            
+            // Show/hide clear search button immediately
+            const clearSearchBtn = document.getElementById('clearSearch');
+            if (clearSearchBtn) {
+                clearSearchBtn.style.display = e.target.value ? 'block' : 'none';
+            }
+        });
+        
         this.categoryFilter.addEventListener('change', () => this.filterLinks());
         this.ratingFilter.addEventListener('change', () => this.filterLinks());
         this.sortSelect.addEventListener('change', () => this.filterLinks());
@@ -43,6 +56,7 @@ class YouTubeLinkViewer {
                 this.searchInput.value = '';
                 this.filterLinks();
                 clearSearchBtn.style.display = 'none';
+                this.searchInput.focus();
             });
         }
         
@@ -86,7 +100,7 @@ class YouTubeLinkViewer {
     }
 
     filterLinks() {
-        const searchTerm = this.searchInput.value.toLowerCase();
+        const searchTerm = this.searchInput.value.toLowerCase().trim();
         const categoryFilter = this.categoryFilter.value;
         const ratingFilter = parseInt(this.ratingFilter.value) || 0;
         const sortOption = this.sortSelect.value;
@@ -97,10 +111,17 @@ class YouTubeLinkViewer {
             clearSearchBtn.style.display = searchTerm ? 'block' : 'none';
         }
         
+        // Apply filters
         let filteredLinks = this.links.filter(link => {
-            const matchesSearch = link.name.toLowerCase().includes(searchTerm) ||
-                                (link.location && link.location.toLowerCase().includes(searchTerm));
+            // Search filter - search in name and location
+            const matchesSearch = !searchTerm || 
+                link.name.toLowerCase().includes(searchTerm) ||
+                (link.location && link.location.toLowerCase().includes(searchTerm));
+            
+            // Category filter
             const matchesCategory = !categoryFilter || link.category === categoryFilter;
+            
+            // Rating filter
             const matchesRating = link.rating >= ratingFilter;
             
             return matchesSearch && matchesCategory && matchesRating;
@@ -109,12 +130,96 @@ class YouTubeLinkViewer {
         // Sort the filtered links
         filteredLinks = this.sortLinks(filteredLinks, sortOption);
         
-        // Update result count
+        // Update result count with animation
+        this.updateResultCount(filteredLinks.length);
+        
+        // Render with animation
+        this.render(filteredLinks);
+        
+        // Show no results message if needed
+        if (filteredLinks.length === 0 && (searchTerm || categoryFilter || ratingFilter > 0)) {
+            this.showNoResultsMessage(searchTerm, categoryFilter, ratingFilter);
+        }
+    }
+    
+    updateResultCount(count) {
         if (this.resultCount) {
-            this.resultCount.textContent = filteredLinks.length;
+            // Add animation class
+            this.resultCount.classList.add('count-update');
+            this.resultCount.textContent = count;
+            
+            // Remove animation class after animation completes
+            setTimeout(() => {
+                this.resultCount.classList.remove('count-update');
+            }, 300);
+        }
+    }
+    
+    showNoResultsMessage(searchTerm, categoryFilter, ratingFilter) {
+        const container = this.currentView === 'card' ? this.cardContainer : this.listContainer;
+        const message = this.buildNoResultsMessage(searchTerm, categoryFilter, ratingFilter);
+        
+        container.innerHTML = `
+            <div class="no-results">
+                <i class="fas fa-search"></i>
+                <h3>ไม่พบผลลัพธ์</h3>
+                <p>${message}</p>
+                <button class="clear-all-filters" onclick="viewer.clearAllFilters()">
+                    <i class="fas fa-times"></i> ล้างตัวกรองทั้งหมด
+                </button>
+            </div>
+        `;
+    }
+    
+    buildNoResultsMessage(searchTerm, categoryFilter, ratingFilter) {
+        const conditions = [];
+        
+        if (searchTerm) {
+            conditions.push(`คำค้น "${searchTerm}"`);
+        }
+        if (categoryFilter) {
+            const categoryName = this.getCategoryName(categoryFilter);
+            conditions.push(`หมวดหมู่ "${categoryName}"`);
+        }
+        if (ratingFilter > 0) {
+            conditions.push(`คะแนน ${ratingFilter}+`);
         }
         
-        this.render(filteredLinks);
+        if (conditions.length === 1) {
+            return `ไม่พบวิดีโอที่ตรงกับ ${conditions[0]}`;
+        } else if (conditions.length === 2) {
+            return `ไม่พบวิดีโอที่ตรงกับ ${conditions[0]} และ ${conditions[1]}`;
+        } else {
+            return `ไม่พบวิดีโอที่ตรงกับเงื่อนไขทั้งหมด`;
+        }
+    }
+    
+    getCategoryName(categoryValue) {
+        const categories = {
+            'ghost-sightings': 'การพบเห็นผี',
+            'paranormal': 'การสืบสวนอาถรรพ์',
+            'haunted-places': 'สถานที่ผีสิง',
+            'urban-legends': 'ตำนานเมือง',
+            'horror-stories': 'เรื่องสยองขวัญ',
+            'supernatural': 'เหนือธรรมชาติ',
+            'cryptids': 'สัตว์ประหลาด',
+            'other': 'อื่นๆ'
+        };
+        return categories[categoryValue] || categoryValue;
+    }
+    
+    clearAllFilters() {
+        this.searchInput.value = '';
+        this.categoryFilter.value = '';
+        this.ratingFilter.value = '0';
+        this.sortSelect.value = 'date-desc';
+        this.filterLinks();
+        
+        // Hide clear search button
+        const clearSearchBtn = document.getElementById('clearSearch');
+        if (clearSearchBtn) {
+            clearSearchBtn.style.display = 'none';
+        }
     }
 
     sortLinks(links, sortOption) {
