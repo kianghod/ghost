@@ -68,6 +68,17 @@
                             </select>
                         </div>
                         <div class="filter-group">
+                            <label for="ratingFilter">คะแนนขั้นต่ำ:</label>
+                            <select id="ratingFilter" class="filter-select">
+                                <option value="0">ทุกคะแนน</option>
+                                <option value="1">1+</option>
+                                <option value="3">3+</option>
+                                <option value="5">5+</option>
+                                <option value="7">7+</option>
+                                <option value="9">9+</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
                             <label for="sortSelect">เรียงลำดับ:</label>
                             <select id="sortSelect" class="filter-select">
                                 <option value="date-desc">วันที่ใหม่สุด</option>
@@ -80,6 +91,9 @@
                         </div>
                     </div>
                     <div class="filter-actions">
+                        <div class="filter-stats">
+                            <span id="filterStats">แสดงทั้งหมด <span id="resultCount">0</span> รายการ</span>
+                        </div>
                         <button id="clearFilters" class="clear-filters-btn">
                             <i class="fas fa-times"></i> ล้างตัวกรอง
                         </button>

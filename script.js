@@ -10,6 +10,7 @@ class YouTubeLinkManager {
         this.bindEvents();
         this.render();
         this.setupContextMenu();
+        this.updateResultCount();
     }
 
     initializeElements() {
@@ -38,7 +39,9 @@ class YouTubeLinkManager {
         this.addLinkBtn = document.getElementById('addLinkBtn');
         this.searchInput = document.getElementById('searchInput');
         this.categoryFilter = document.getElementById('categoryFilter');
+        this.ratingFilter = document.getElementById('ratingFilter');
         this.sortSelect = document.getElementById('sortSelect');
+        this.resultCount = document.getElementById('resultCount');
     }
 
     bindEvents() {
@@ -63,6 +66,7 @@ class YouTubeLinkManager {
         // Search and filter events
         this.searchInput.addEventListener('input', () => this.filterLinks());
         this.categoryFilter.addEventListener('change', () => this.filterLinks());
+        this.ratingFilter.addEventListener('change', () => this.filterLinks());
         this.sortSelect.addEventListener('change', () => this.filterLinks());
         
         // Clear search button
@@ -80,6 +84,7 @@ class YouTubeLinkManager {
         if (clearFiltersBtn) {
             clearFiltersBtn.addEventListener('click', () => {
                 this.categoryFilter.value = '';
+                this.ratingFilter.value = '0';
                 this.sortSelect.value = 'date-desc';
                 this.filterLinks();
             });
@@ -198,6 +203,7 @@ class YouTubeLinkManager {
     filterLinks() {
         const searchTerm = this.searchInput.value.toLowerCase();
         const categoryFilter = this.categoryFilter.value;
+        const ratingFilter = parseInt(this.ratingFilter.value) || 0;
         const sortOption = this.sortSelect.value;
         
         // Show/hide clear search button
@@ -210,12 +216,18 @@ class YouTubeLinkManager {
             const matchesSearch = link.name.toLowerCase().includes(searchTerm) ||
                                 (link.location && link.location.toLowerCase().includes(searchTerm));
             const matchesCategory = !categoryFilter || link.category === categoryFilter;
+            const matchesRating = link.rating >= ratingFilter;
             
-            return matchesSearch && matchesCategory;
+            return matchesSearch && matchesCategory && matchesRating;
         });
         
         // Sort the filtered links
         filteredLinks = this.sortLinks(filteredLinks, sortOption);
+        
+        // Update result count
+        if (this.resultCount) {
+            this.resultCount.textContent = filteredLinks.length;
+        }
         
         this.render(filteredLinks);
     }
@@ -374,6 +386,12 @@ class YouTubeLinkManager {
 
     saveToLocalStorage() {
         localStorage.setItem('youtubeLinks', JSON.stringify(this.links));
+    }
+
+    updateResultCount() {
+        if (this.resultCount) {
+            this.resultCount.textContent = this.links.length;
+        }
     }
 
     escapeHtml(text) {
