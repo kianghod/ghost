@@ -144,8 +144,9 @@ body {
     border: 1px solid #333;
     border-radius: 12px;
     padding: 20px;
-    margin-bottom: 20px;
+    margin: 0 -20px 20px -20px;
     backdrop-filter: blur(10px);
+    width: calc(100% + 40px);
 }
 
 .search-section {
@@ -1058,7 +1059,8 @@ body {
     .search-filter {
         flex-direction: column;
         gap: 15px;
-        width: 100%;
+        width: calc(100% + 40px);
+        margin: 0 -20px 20px -20px;
     }
 
     .search-section {
