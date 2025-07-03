@@ -388,7 +388,7 @@ class YouTubeLinkManager {
             const ratingNumber = link.rating;
             
             return `
-                <div class="card" data-id="${link.id}">
+                <div class="card" data-id="${link.id}" onclick="app.openLink('${link.url}')">
                     <div class="card-header">
                         <div class="card-category">${this.escapeHtml(link.category)}</div>
                         <div class="card-rating">
@@ -406,7 +406,7 @@ class YouTubeLinkManager {
                         <h3 class="card-title">${this.escapeHtml(link.name)}</h3>
                         ${link.location ? `<div class="card-location"><i class="fas fa-map-marker-alt"></i> ${this.escapeHtml(link.location)}</div>` : ''}
                         <div class="card-actions">
-                            <button class="card-btn primary" onclick="app.openLink('${link.url}')">
+                            <button class="card-btn primary" onclick="event.stopPropagation(); app.openLink('${link.url}')">
                                 <i class="fas fa-play"></i> ดู
                             </button>
                         </div>
@@ -437,7 +437,7 @@ class YouTubeLinkManager {
             const ratingNumber = link.rating;
             
             return `
-                <div class="list-item" data-id="${link.id}">
+                <div class="list-item" data-id="${link.id}" onclick="app.openLink('${link.url}')">
                     <div class="list-thumbnail">
                         ${thumbnailUrl ? `<img src="${thumbnailUrl}" alt="${link.name}" onerror="this.style.display='none'">` : ''}
                     </div>
@@ -451,7 +451,7 @@ class YouTubeLinkManager {
                         </div>
                     </div>
                     <div class="list-actions">
-                        <button class="list-btn primary" onclick="app.openLink('${link.url}')">
+                        <button class="list-btn primary" onclick="event.stopPropagation(); app.openLink('${link.url}')">
                             <i class="fas fa-play"></i> ดู
                         </button>
                     </div>
