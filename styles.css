@@ -474,25 +474,60 @@ body::before {
 }
 
 .card-category {
-    font-size: 12px;
-    color: #ff6666;
+    font-size: 11px;
+    color: #ffffff;
     text-transform: uppercase;
-    letter-spacing: 1.5px;
+    letter-spacing: 1px;
     font-weight: 700;
-    background: rgba(255, 0, 0, 0.1);
-    padding: 6px 12px;
-    border-radius: 8px;
-    border: 1px solid rgba(255, 0, 0, 0.2);
+    background: linear-gradient(135deg, rgba(255, 0, 0, 0.8), rgba(204, 0, 0, 0.9));
+    padding: 8px 16px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 12px rgba(255, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.card-category::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.card:hover .card-category::before {
+    left: 100%;
+}
+
+.card-category:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 0, 0, 0.4);
+    background: linear-gradient(135deg, rgba(255, 0, 0, 0.9), rgba(255, 51, 51, 1));
 }
 
 .card-rating {
     display: flex;
     align-items: center;
     gap: 8px;
-    background: rgba(0, 0, 0, 0.4);
-    padding: 8px 12px;
-    border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.6), rgba(20, 20, 20, 0.8));
+    padding: 8px 14px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.card-rating:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+    border-color: rgba(255, 0, 0, 0.3);
 }
 
 .rating-number {
@@ -737,9 +772,72 @@ body::before {
     align-items: center;
     gap: 6px;
     background: rgba(255, 255, 255, 0.05);
-    padding: 4px 8px;
-    border-radius: 6px;
+    padding: 6px 12px;
+    border-radius: 8px;
     border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.list-meta span:first-child {
+    background: linear-gradient(135deg, rgba(255, 0, 0, 0.8), rgba(204, 0, 0, 0.9));
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 2px 8px rgba(255, 0, 0, 0.3);
+    color: #ffffff;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 12px;
+}
+
+.list-meta span:first-child:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(255, 0, 0, 0.4);
+    background: linear-gradient(135deg, rgba(255, 0, 0, 0.9), rgba(255, 51, 51, 1));
+}
+
+.list-meta span:nth-child(2) {
+    background: linear-gradient(135deg, rgba(255, 165, 0, 0.8), rgba(255, 140, 0, 0.9));
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 2px 8px rgba(255, 165, 0, 0.3);
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 12px;
+}
+
+.list-meta span:nth-child(2):hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(255, 165, 0, 0.4);
+    background: linear-gradient(135deg, rgba(255, 165, 0, 0.9), rgba(255, 193, 7, 1));
+}
+
+.list-meta span:nth-child(3) {
+    background: linear-gradient(135deg, rgba(0, 123, 255, 0.8), rgba(0, 86, 179, 0.9));
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3);
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 12px;
+}
+
+.list-meta span:nth-child(3):hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.4);
+    background: linear-gradient(135deg, rgba(0, 123, 255, 0.9), rgba(0, 150, 255, 1));
+}
+
+.list-meta span:nth-child(4) {
+    background: linear-gradient(135deg, rgba(108, 117, 125, 0.8), rgba(73, 80, 87, 0.9));
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 2px 8px rgba(108, 117, 125, 0.3);
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 12px;
+}
+
+.list-meta span:nth-child(4):hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(108, 117, 125, 0.4);
+    background: linear-gradient(135deg, rgba(108, 117, 125, 0.9), rgba(134, 142, 150, 1));
 }
 
 .list-actions {
