@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>หลอดผี - คอลเลกชันวิดีโอ</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1><i class="fas fa-ghost"></i> หลอดผี</h1>
+            <div class="header-controls">
+                <div class="view-toggle">
+                    <button id="cardView" class="view-btn active">
+                        <i class="fas fa-th"></i> <span class="btn-text">การ์ด</span>
+                    </button>
+                    <button id="listView" class="view-btn">
+                        <i class="fas fa-list"></i> <span class="btn-text">รายการ</span>
+                    </button>
+                </div>
+                <a href="admin.html" class="view-link" style="display: none;">
+                    <i class="fas fa-cog"></i> <span class="btn-text">จัดการ</span>
+                </a>
+                <button id="mobileMenuBtn" class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </header>
+
+        <div class="controls">
+            <div class="search-filter">
+                <div class="search-section">
+                    <input type="text" id="searchInput" placeholder="ค้นหาวิดีโอผี..." class="search-input">
+                    <button id="filterToggleBtn" class="filter-toggle-btn">
+                        <i class="fas fa-filter"></i>
+                    </button>
+                </div>
+                <div id="filterSection" class="filter-section">
+                    <select id="categoryFilter" class="filter-select">
+                        <option value="">ทุกหมวดหมู่</option>
+                        <option value="ghost-sightings">การพบเห็นผี</option>
+                        <option value="paranormal">การสืบสวนอาถรรพ์</option>
+                        <option value="haunted-places">สถานที่ผีสิง</option>
+                        <option value="urban-legends">ตำนานเมือง</option>
+                        <option value="horror-stories">เรื่องสยองขวัญ</option>
+                        <option value="supernatural">เหนือธรรมชาติ</option>
+                        <option value="cryptids">สัตว์ประหลาด</option>
+                        <option value="other">อื่นๆ</option>
+                    </select>
+                    <select id="sortSelect" class="filter-select">
+                        <option value="date-desc">วันที่ใหม่สุด</option>
+                        <option value="date-asc">วันที่เก่าสุด</option>
+                        <option value="rating-desc">คะแนนสูงสุด</option>
+                        <option value="rating-asc">คะแนนต่ำสุด</option>
+                        <option value="name-asc">ชื่อ A-Z</option>
+                        <option value="name-desc">ชื่อ Z-A</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <main class="content">
+            <div id="cardContainer" class="card-container">
+                <!-- Cards will be displayed here -->
+            </div>
+            <div id="listContainer" class="list-container hidden">
+                <!-- List will be displayed here -->
+            </div>
+        </main>
+    </div>
+
+    <script src="view.js"></script>
+    <script>
+        // Check if admin is logged in to show admin link
+        if (localStorage.getItem('adminLoggedIn') === 'true') {
+            const adminLink = document.querySelector('.view-link');
+            adminLink.style.display = 'flex';
+        }
+
+        // Mobile menu functionality
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const viewToggle = document.querySelector('.view-toggle');
+        const headerControls = document.querySelector('.header-controls');
+
+        mobileMenuBtn.addEventListener('click', function() {
+            viewToggle.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!headerControls.contains(e.target)) {
+                viewToggle.classList.remove('active');
+            }
+        });
+
+        // Filter toggle functionality
+        const filterToggleBtn = document.getElementById('filterToggleBtn');
+        const filterSection = document.getElementById('filterSection');
+
+        filterToggleBtn.addEventListener('click', function() {
+            filterSection.classList.toggle('active');
+            filterToggleBtn.classList.toggle('active');
+        });
+    </script>
+</body>
+</html> 
