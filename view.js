@@ -273,4 +273,59 @@ class YouTubeLinkViewer {
 }
 
 // Initialize the viewer
-const viewer = new YouTubeLinkViewer(); 
+const viewer = new YouTubeLinkViewer();
+
+// Add some sample data if no links exist
+if (viewer.links.length === 0) {
+    const sampleLinks = [
+        {
+            id: 'sample1',
+            name: 'ผีปรากฏในกล้อง - หลักฐานอาถรรพ์จริง',
+            url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+            rating: 9,
+            category: 'ghost-sightings',
+            location: 'บ้านผีสิง',
+            dateAdded: new Date().toISOString()
+        },
+        {
+            id: 'sample2',
+            name: 'การสืบสวนอาถรรพ์ในโรงแรมเก่า',
+            url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+            rating: 7,
+            category: 'paranormal',
+            location: 'โรงแรมผีสิง',
+            dateAdded: new Date().toISOString()
+        },
+        {
+            id: 'sample3',
+            name: 'ตำนานผีบ้านหลังเก่า',
+            url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+            rating: 8,
+            category: 'urban-legends',
+            location: 'บ้านเก่า',
+            dateAdded: new Date().toISOString()
+        },
+        {
+            id: 'sample4',
+            name: 'เรื่องสยองขวัญในโรงเรียน',
+            url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+            rating: 6,
+            category: 'horror-stories',
+            location: 'โรงเรียนเก่า',
+            dateAdded: new Date().toISOString()
+        },
+        {
+            id: 'sample5',
+            name: 'สัตว์ประหลาดในป่า',
+            url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+            rating: 4,
+            category: 'cryptids',
+            location: 'ป่าลึก',
+            dateAdded: new Date().toISOString()
+        }
+    ];
+    
+    viewer.links = sampleLinks;
+    viewer.saveToLocalStorage();
+    viewer.render();
+} 
