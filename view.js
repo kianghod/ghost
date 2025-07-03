@@ -32,6 +32,26 @@ class YouTubeLinkViewer {
         this.searchInput.addEventListener('input', () => this.filterLinks());
         this.categoryFilter.addEventListener('change', () => this.filterLinks());
         this.sortSelect.addEventListener('change', () => this.filterLinks());
+        
+        // Clear search button
+        const clearSearchBtn = document.getElementById('clearSearch');
+        if (clearSearchBtn) {
+            clearSearchBtn.addEventListener('click', () => {
+                this.searchInput.value = '';
+                this.filterLinks();
+                clearSearchBtn.style.display = 'none';
+            });
+        }
+        
+        // Clear filters button
+        const clearFiltersBtn = document.getElementById('clearFilters');
+        if (clearFiltersBtn) {
+            clearFiltersBtn.addEventListener('click', () => {
+                this.categoryFilter.value = '';
+                this.sortSelect.value = 'date-desc';
+                this.filterLinks();
+            });
+        }
     }
 
     switchView(view) {
@@ -58,6 +78,12 @@ class YouTubeLinkViewer {
         const searchTerm = this.searchInput.value.toLowerCase();
         const categoryFilter = this.categoryFilter.value;
         const sortOption = this.sortSelect.value;
+        
+        // Show/hide clear search button
+        const clearSearchBtn = document.getElementById('clearSearch');
+        if (clearSearchBtn) {
+            clearSearchBtn.style.display = searchTerm ? 'block' : 'none';
+        }
         
         let filteredLinks = this.links.filter(link => {
             const matchesSearch = link.name.toLowerCase().includes(searchTerm) ||
@@ -119,15 +145,15 @@ class YouTubeLinkViewer {
         this.cardContainer.innerHTML = links.map(link => {
             const videoId = this.getVideoId(link.url);
             const thumbnailUrl = videoId ? this.getThumbnailUrl(videoId) : '';
-            const skulls = '💀'.repeat(link.rating) + '☠️'.repeat(10 - link.rating);
+            const ratingNumber = link.rating;
             
             return `
                 <div class="card" data-id="${link.id}">
                     <div class="card-header">
                         <div class="card-category">${this.escapeHtml(link.category)}</div>
                         <div class="card-rating">
-                            <span class="rating-skulls">${skulls}</span>
-                            <span class="rating-text">${link.rating}/10</span>
+                            <span class="rating-number">${ratingNumber}</span>
+                            <span class="rating-text">/10</span>
                         </div>
                     </div>
                     <div class="card-thumbnail">
@@ -165,7 +191,7 @@ class YouTubeLinkViewer {
         this.listContainer.innerHTML = links.map(link => {
             const videoId = this.getVideoId(link.url);
             const thumbnailUrl = videoId ? this.getThumbnailUrl(videoId) : '';
-            const skulls = '💀'.repeat(link.rating) + '☠️'.repeat(10 - link.rating);
+            const ratingNumber = link.rating;
             
             return `
                 <div class="list-item" data-id="${link.id}">
@@ -176,11 +202,10 @@ class YouTubeLinkViewer {
                         <h3 class="list-title">${this.escapeHtml(link.name)}</h3>
                         <div class="list-meta">
                             <span><i class="fas fa-tag"></i> ${this.escapeHtml(link.category)}</span>
-                            <span><i class="fas fa-skull"></i> ${link.rating}/10</span>
+                            <span><i class="fas fa-star"></i> ${ratingNumber}/10</span>
                             ${link.location ? `<span><i class="fas fa-map-marker-alt"></i> ${this.escapeHtml(link.location)}</span>` : ''}
                             <span><i class="fas fa-calendar"></i> ${new Date(link.dateAdded).toLocaleDateString()}</span>
                         </div>
-                        <div class="rating-skulls">${skulls}</div>
                     </div>
                     <div class="list-actions">
                         <button class="list-btn primary" onclick="viewer.openLink('${link.url}')">

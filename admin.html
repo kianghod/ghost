@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>หลอดผี - จัดการวิดีโอ</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="stylesheet" href="styles.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
@@ -35,31 +36,51 @@
             </button>
             <div class="search-filter">
                 <div class="search-section">
-                    <input type="text" id="searchInput" placeholder="ค้นหาวิดีโอผี..." class="search-input">
+                    <div class="search-box">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" id="searchInput" placeholder="ค้นหาวิดีโอผี..." class="search-input">
+                        <button id="clearSearch" class="clear-search" style="display: none;">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
                     <button id="filterToggleBtn" class="filter-toggle-btn">
                         <i class="fas fa-filter"></i>
+                        <span class="filter-text">ตัวกรอง</span>
                     </button>
                 </div>
                 <div id="filterSection" class="filter-section">
-                    <select id="categoryFilter" class="filter-select">
-                        <option value="">ทุกหมวดหมู่</option>
-                        <option value="ghost-sightings">การพบเห็นผี</option>
-                        <option value="paranormal">การสืบสวนอาถรรพ์</option>
-                        <option value="haunted-places">สถานที่ผีสิง</option>
-                        <option value="urban-legends">ตำนานเมือง</option>
-                        <option value="horror-stories">เรื่องสยองขวัญ</option>
-                        <option value="supernatural">เหนือธรรมชาติ</option>
-                        <option value="cryptids">สัตว์ประหลาด</option>
-                        <option value="other">อื่นๆ</option>
-                    </select>
-                    <select id="sortSelect" class="filter-select">
-                        <option value="date-desc">วันที่ใหม่สุด</option>
-                        <option value="date-asc">วันที่เก่าสุด</option>
-                        <option value="rating-desc">คะแนนสูงสุด</option>
-                        <option value="rating-asc">คะแนนต่ำสุด</option>
-                        <option value="name-asc">ชื่อ A-Z</option>
-                        <option value="name-desc">ชื่อ Z-A</option>
-                    </select>
+                    <div class="filter-row">
+                        <div class="filter-group">
+                            <label for="categoryFilter">หมวดหมู่:</label>
+                            <select id="categoryFilter" class="filter-select">
+                                <option value="">ทุกหมวดหมู่</option>
+                                <option value="ghost-sightings">การพบเห็นผี</option>
+                                <option value="paranormal">การสืบสวนอาถรรพ์</option>
+                                <option value="haunted-places">สถานที่ผีสิง</option>
+                                <option value="urban-legends">ตำนานเมือง</option>
+                                <option value="horror-stories">เรื่องสยองขวัญ</option>
+                                <option value="supernatural">เหนือธรรมชาติ</option>
+                                <option value="cryptids">สัตว์ประหลาด</option>
+                                <option value="other">อื่นๆ</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="sortSelect">เรียงลำดับ:</label>
+                            <select id="sortSelect" class="filter-select">
+                                <option value="date-desc">วันที่ใหม่สุด</option>
+                                <option value="date-asc">วันที่เก่าสุด</option>
+                                <option value="rating-desc">คะแนนสูงสุด</option>
+                                <option value="rating-asc">คะแนนต่ำสุด</option>
+                                <option value="name-asc">ชื่อ A-Z</option>
+                                <option value="name-desc">ชื่อ Z-A</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="filter-actions">
+                        <button id="clearFilters" class="clear-filters-btn">
+                            <i class="fas fa-times"></i> ล้างตัวกรอง
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
